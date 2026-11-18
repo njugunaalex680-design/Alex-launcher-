@@ -6,18 +6,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
   <meta name="theme-color" content="#050008">
   <title>Alex Launcher</title>
-  <link rel="stylesheet" href="./style.css?v=4">
-  <link rel="stylesheet" href="./app-drawer.css">
+
+  <link rel="stylesheet" href="./style.css?v=5">
+  <link rel="stylesheet" href="./app-drawer.css?v=5">
 </head>
 <body>
 
   <main class="launcher">
 
+    <!-- STATUS BAR -->
     <header class="status-bar">
       <span id="status-time">09:41</span>
       <span>● ● ● ▰</span>
     </header>
 
+    <!-- CLOCK AND WEATHER -->
     <section class="clock-section">
       <div>
         <h1 id="clock">09:41</h1>
@@ -31,31 +34,39 @@
       </div>
     </section>
 
+    <!-- SEARCH -->
     <section class="search-box">
       <span>⌕</span>
       <input id="search" type="text" placeholder="Search apps...">
       <span>🎙</span>
     </section>
 
+    <!-- FAVOURITES -->
     <section class="favourites">
+
       <div class="app">
         <span>▶️</span>
         <p>YouTube</p>
       </div>
+
       <div class="app">
         <span>💬</span>
         <p>Messages</p>
       </div>
+
       <div class="app">
         <span>🌐</span>
         <p>Browser</p>
       </div>
+
       <div class="app">
         <span>📷</span>
         <p>Camera</p>
       </div>
+
     </section>
 
+    <!-- APP WHEEL -->
     <section class="app-wheel">
 
       <div class="wheel-item top">
@@ -63,15 +74,29 @@
         <p>Camera</p>
       </div>
 
-      <div class="wheel-item right">
+      <!-- SETTINGS BUTTON -->
+      <button
+        type="button"
+        class="wheel-item right"
+        id="settings-wheel-button"
+        aria-label="Open Alex Launcher Settings"
+        style="cursor:pointer; border:0; font:inherit;"
+      >
         <span>⚙️</span>
         <p>Settings</p>
-      </div>
+      </button>
 
-      <div class="wheel-item bottom-right">
+      <!-- APPS BUTTON -->
+      <button
+        type="button"
+        class="wheel-item bottom-right"
+        id="apps-wheel-button"
+        aria-label="Open App Drawer"
+        style="cursor:pointer; border:0; font:inherit;"
+      >
         <span>▦</span>
         <p>Apps</p>
-      </div>
+      </button>
 
       <div class="wheel-item bottom">
         <span>👥</span>
@@ -92,77 +117,148 @@
 
     </section>
 
+    <!-- BOTTOM DOCK -->
     <nav class="bottom-dock">
+
       <span>📞</span>
+
       <span>💬</span>
-      <span id="open-apps">⠿</span>
+
+      <button
+        type="button"
+        id="open-apps"
+        aria-label="Open App Drawer"
+        style="cursor:pointer; border:0; background:transparent; color:inherit; font:inherit;"
+      >⠿</button>
+
       <span>👤</span>
+
       <span>📷</span>
+
     </nav>
 
   </main>
 
-<!-- APP DRAWER -->
-<section class="app-drawer" id="app-drawer">
+  <!-- APP DRAWER -->
+  <section class="app-drawer" id="app-drawer">
 
-  <div class="drawer-header">
-    <h2>All Apps</h2>
-    <button class="drawer-close" id="drawer-close">×</button>
-  </div>
-
-  <div class="drawer-search">
-    <span>🔍</span>
-    <input id="drawer-search" type="text" placeholder="Search apps...">
-  </div>
-
-  <div class="drawer-categories">
-    <button class="selected" data-category="All">All</button>
-    <button data-category="Social">Social</button>
-    <button data-category="Games">Games</button>
-    <button data-category="Tools">Tools</button>
-    <button data-category="Media">Media</button>
-    <button data-category="Education">Education</button>
-    <button data-category="Productivity">Productivity</button>
-  </div>
-
-  <div class="drawer-content">
-    <div class="drawer-all">
-      <h3 id="drawer-heading">All Applications</h3>
-      <div class="drawer-grid" id="drawer-grid"></div>
+    <div class="drawer-header">
+      <h2>All Apps</h2>
+      <button class="drawer-close" id="drawer-close">×</button>
     </div>
 
-    <div class="drawer-alphabet" id="drawer-alphabet">
-      <button data-letter="A">A</button>
-      <button data-letter="B">B</button>
-      <button data-letter="C">C</button>
-      <button data-letter="D">D</button>
-      <button data-letter="E">E</button>
-      <button data-letter="F">F</button>
-      <button data-letter="G">G</button>
-      <button data-letter="H">H</button>
-      <button data-letter="I">I</button>
-      <button data-letter="J">J</button>
-      <button data-letter="K">K</button>
-      <button data-letter="L">L</button>
-      <button data-letter="M">M</button>
-      <button data-letter="N">N</button>
-      <button data-letter="O">O</button>
-      <button data-letter="P">P</button>
-      <button data-letter="Q">Q</button>
-      <button data-letter="R">R</button>
-      <button data-letter="S">S</button>
-      <button data-letter="T">T</button>
-      <button data-letter="U">U</button>
-      <button data-letter="V">V</button>
-      <button data-letter="W">W</button>
-      <button data-letter="X">X</button>
-      <button data-letter="Y">Y</button>
-      <button data-letter="Z">Z</button>
+    <div class="drawer-search">
+      <span>🔍</span>
+      <input
+        id="drawer-search"
+        type="text"
+        placeholder="Search apps..."
+      >
     </div>
-  </div>
 
-        </section>
-  
-  <script src="./script.js"></script>
+    <!-- CATEGORIES -->
+    <div class="drawer-categories">
+
+      <button class="selected" data-category="All">All</button>
+      <button data-category="Social">Social</button>
+      <button data-category="Games">Games</button>
+      <button data-category="Tools">Tools</button>
+      <button data-category="Media">Media</button>
+      <button data-category="Education">Education</button>
+      <button data-category="Productivity">Productivity</button>
+
+    </div>
+
+    <!-- DRAWER CONTENT -->
+    <div class="drawer-content">
+
+      <div class="drawer-all">
+        <h3 id="drawer-heading">All Applications</h3>
+        <div class="drawer-grid" id="drawer-grid"></div>
+      </div>
+
+      <!-- ALPHABET NAVIGATION -->
+      <div class="drawer-alphabet" id="drawer-alphabet">
+
+        <button data-letter="A">A</button>
+        <button data-letter="B">B</button>
+        <button data-letter="C">C</button>
+        <button data-letter="D">D</button>
+        <button data-letter="E">E</button>
+        <button data-letter="F">F</button>
+        <button data-letter="G">G</button>
+        <button data-letter="H">H</button>
+        <button data-letter="I">I</button>
+        <button data-letter="J">J</button>
+        <button data-letter="K">K</button>
+        <button data-letter="L">L</button>
+        <button data-letter="M">M</button>
+        <button data-letter="N">N</button>
+        <button data-letter="O">O</button>
+        <button data-letter="P">P</button>
+        <button data-letter="Q">Q</button>
+        <button data-letter="R">R</button>
+        <button data-letter="S">S</button>
+        <button data-letter="T">T</button>
+        <button data-letter="U">U</button>
+        <button data-letter="V">V</button>
+        <button data-letter="W">W</button>
+        <button data-letter="X">X</button>
+        <button data-letter="Y">Y</button>
+        <button data-letter="Z">Z</button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- JAVASCRIPT -->
+  <script src="./script.js?v=6"></script>
+
+  <!-- BUTTON CONNECTIONS -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+      const settingsButton =
+        document.getElementById("settings-wheel-button");
+
+      const appsButton =
+        document.getElementById("apps-wheel-button");
+
+      const dockButton =
+        document.getElementById("open-apps");
+
+      const appDrawer =
+        document.getElementById("app-drawer");
+
+      function openAppDrawer() {
+        if (appDrawer) {
+          appDrawer.classList.add("active");
+
+          if (typeof displayApps === "function") {
+            displayApps();
+          }
+        }
+      }
+
+      if (settingsButton) {
+        settingsButton.addEventListener("click", function () {
+          window.location.href = "./settings.html";
+        });
+      }
+
+      if (appsButton) {
+        appsButton.addEventListener("click", openAppDrawer);
+      }
+
+      if (dockButton) {
+        dockButton.addEventListener("click", openAppDrawer);
+      }
+
+    });
+  </script>
+
 </body>
-</html>
+        </html>
+        
