@@ -1,0 +1,19 @@
+
+{
+  "name": "alex-launcher",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Alex Launcher - Purple Neon Android Launcher",
+  "scripts": {
+    "dev": "vite --host 0.0.0.0",
+    "build": "vite build",
+    "preview": "vite preview --host 0.0.0.0"
+  },
+  "dependencies": {
+    "@capacitor/core": "^7.4.3"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.4.3",
+    "vite": "^6.3.5"
+  }
+}
