@@ -1,0 +1,204 @@
+
+/* ALEX LAUNCHER - APP DRAWER */
+
+.app-drawer {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: none;
+  flex-direction: column;
+  overflow: hidden;
+  padding: 18px 14px;
+  padding-bottom: max(14px, env(safe-area-inset-bottom));
+  color: #fff;
+  background:
+    radial-gradient(circle at 80% 10%, #35005b, transparent 40%),
+    radial-gradient(circle at 10% 90%, #260044, transparent 40%),
+    #050008;
+}
+
+.app-drawer.active {
+  display: flex;
+}
+
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+  margin-bottom: 18px;
+}
+
+.drawer-header h2 {
+  font-size: 24px;
+  color: #fff;
+  text-shadow: 0 0 12px #bd00ff;
+}
+
+.drawer-close {
+  border: 1px solid #bd00ff;
+  background: #190025;
+  color: white;
+  border-radius: 50%;
+  width: 38px;
+  height: 38px;
+  font-size: 20px;
+}
+
+.drawer-search {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 13px;
+  border: 1px solid #c000ff;
+  border-radius: 30px;
+  box-shadow: 0 0 12px #8500bd;
+  flex-shrink: 0;
+}
+
+.drawer-search input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  color: white;
+  border: none;
+  outline: none;
+  font-size: 15px;
+}
+
+.drawer-categories {
+  display: flex;
+  gap: 9px;
+  overflow-x: auto;
+  padding: 17px 0;
+  flex-shrink: 0;
+  scrollbar-width: none;
+}
+
+.drawer-categories button {
+  border: 1px solid #7000a5;
+  border-radius: 20px;
+  padding: 8px 15px;
+  color: #d9b5ed;
+  background: #160020;
+  white-space: nowrap;
+}
+
+.drawer-categories button.selected {
+  color: white;
+  background: #8500bd;
+  box-shadow: 0 0 12px #b000ff;
+}
+
+.drawer-recent {
+  flex-shrink: 0;
+  margin-bottom: 15px;
+}
+
+.drawer-recent h3,
+.drawer-all h3 {
+  font-size: 14px;
+  color: #d8a4ff;
+  margin-bottom: 12px;
+}
+
+.recent-apps {
+  display: flex;
+  gap: 22px;
+  overflow-x: auto;
+  scrollbar-width: none;
+}
+
+.drawer-content {
+  display: flex;
+  flex: 1;
+  min-height: 0;
+  gap: 8px;
+}
+
+.drawer-all {
+  flex: 1;
+  min-width: 0;
+  overflow-y: auto;
+  scrollbar-width: none;
+}
+
+.drawer-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 20px 5px;
+  padding: 8px 0 20px;
+}
+
+.drawer-app {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  color: white;
+}
+
+.drawer-app .app-icon {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  font-size: 27px;
+  border-radius: 15px;
+  background: linear-gradient(145deg, #28003f, #100018);
+  border: 1px solid #a000e8;
+  box-shadow: 0 0 9px #7300a5;
+}
+
+.drawer-app .app-name {
+  font-size: 11px;
+  text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 100%;
+}
+
+.drawer-alphabet {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  flex-shrink: 0;
+  width: 20px;
+}
+
+.drawer-alphabet button {
+  border: none;
+  background: transparent;
+  color: #d59bff;
+  font-size: 11px;
+  font-weight: bold;
+  padding: 2px;
+}
+
+.drawer-alphabet button:active {
+  color: white;
+  text-shadow: 0 0 10px #d000ff;
+}
+
+.drawer-empty {
+  color: #bda3ce;
+  text-align: center;
+  padding: 30px 10px;
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 360px) {
+  .drawer-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .drawer-app .app-icon {
+    width: 43px;
+    height: 43px;
+  }
+}
