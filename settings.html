@@ -1,0 +1,258 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#080810">
+  <title>Alex Launcher Settings</title>
+  <link rel="stylesheet" href="./style.css">
+  <link rel="stylesheet" href="./settings.css">
+</head>
+<body>
+
+<section class="launcher-settings active" id="launcher-settings">
+
+  <header class="settings-header">
+    <div>
+      <h1>Settings</h1>
+      <p class="settings-description">Personalise your Alex Launcher</p>
+    </div>
+    <button id="settings-close" aria-label="Close settings">×</button>
+  </header>
+
+  <div id="settings-home">
+
+    <h3 class="settings-subtitle">PERSONALISATION</h3>
+
+    <div class="settings-group">
+      <button class="settings-item" data-page="themes">
+        <span class="settings-icon">🎨</span>
+        <span class="settings-item-info"><strong>3D Themes</strong><small>Choose your launcher appearance</small></span>
+        <span class="settings-arrow">›</span>
+      </button>
+
+      <button class="settings-item" data-page="fonts">
+        <span class="settings-icon">Aa</span>
+        <span class="settings-item-info"><strong>Fonts</strong><small>Choose from 20 fonts</small></span>
+        <span class="settings-arrow">›</span>
+      </button>
+
+      <button class="settings-item" data-page="home-screen">
+        <span class="settings-icon">🏠</span>
+        <span class="settings-item-info"><strong>Home Screen</strong><small>Icons, wheel and dock</small></span>
+        <span class="settings-arrow">›</span>
+      </button>
+
+      <button class="settings-item" data-page="drawer">
+        <span class="settings-icon">▦</span>
+        <span class="settings-item-info"><strong>App Drawer</strong><small>Layout and icon size</small></span>
+        <span class="settings-arrow">›</span>
+      </button>
+
+      <button class="settings-item" data-page="wallpapers">
+        <span class="settings-icon">🖼️</span>
+        <span class="settings-item-info"><strong>Wallpapers</strong><small>Choose your background</small></span>
+        <span class="settings-arrow">›</span>
+      </button>
+
+      <button class="settings-item" data-page="search">
+        <span class="settings-icon">🔍</span>
+        <span class="settings-item-info"><strong>Search</strong><small>Customise search bar</small></span>
+        <span class="settings-arrow">›</span>
+      </button>
+
+      <button class="settings-item" data-page="animations">
+        <span class="settings-icon">✨</span>
+        <span class="settings-item-info"><strong>Animations</strong><small>Control launcher effects</small></span>
+        <span class="settings-arrow">›</span>
+      </button>
+    </div>
+
+    <h3 class="settings-subtitle">PRIVACY & SECURITY</h3>
+
+    <div class="settings-group">
+      <button class="settings-item" data-page="privacy">
+        <span class="settings-icon">🔐</span>
+        <span class="settings-item-info"><strong>Privacy & Screen Lock</strong><small>Protect your launcher</small></span>
+        <span class="settings-arrow">›</span>
+      </button>
+
+      <button class="settings-item" data-page="backup">
+        <span class="settings-icon">💾</span>
+        <span class="settings-item-info"><strong>Backup & Restore</strong><small>Save your preferences</small></span>
+        <span class="settings-arrow">›</span>
+      </button>
+    </div>
+
+    <h3 class="settings-subtitle">ABOUT</h3>
+
+    <div class="settings-group">
+      <button class="settings-item" data-page="about">
+        <span class="settings-icon">ⓘ</span>
+        <span class="settings-item-info"><strong>About Alex Launcher</strong><small>Version and information</small></span>
+        <span class="settings-arrow">›</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- THEMES -->
+  <div class="settings-page" id="page-themes">
+    <button class="settings-back">← Back</button>
+    <h2 class="settings-page-title">3D Themes</h2>
+    <div class="theme-grid">
+      <button class="theme-option" data-theme="purple"><span class="theme-preview"></span><span class="theme-name">Purple Neon</span></button>
+      <button class="theme-option" data-theme="cyber"><span class="theme-preview cyber"></span><span class="theme-name">Cyber Blue</span></button>
+      <button class="theme-option" data-theme="crimson"><span class="theme-preview crimson"></span><span class="theme-name">Crimson 3D</span></button>
+      <button class="theme-option" data-theme="gold"><span class="theme-preview gold"></span><span class="theme-name">Royal Gold</span></button>
+      <button class="theme-option" data-theme="ice"><span class="theme-preview ice"></span><span class="theme-name">Ice Blue</span></button>
+      <button class="theme-option" data-theme="emerald"><span class="theme-preview emerald"></span><span class="theme-name">Emerald 3D</span></button>
+    </div>
+  </div>
+
+  <!-- FONTS -->
+  <div class="settings-page" id="page-fonts">
+    <button class="settings-back">← Back</button>
+    <h2 class="settings-page-title">Fonts</h2>
+    <div class="font-grid" id="font-grid"></div>
+    <div class="settings-control">
+      <label for="font-size">Font size</label>
+      <input class="settings-range" id="font-size" type="range" min="12" max="24" value="16">
+      <small id="font-size-value">16px</small>
+    </div>
+  </div>
+
+  <!-- HOME SCREEN -->
+  <div class="settings-page" id="page-home-screen">
+    <button class="settings-back">← Back</button>
+    <h2 class="settings-page-title">Home Screen</h2>
+    <div class="settings-control">
+      <label for="home-icon-size">App icon size</label>
+      <input class="settings-range" id="home-icon-size" type="range" min="30" max="80" value="48">
+    </div>
+    <div class="settings-control">
+      <label for="wheel-size">App wheel size</label>
+      <input class="settings-range" id="wheel-size" type="range" min="200" max="350" value="280">
+    </div>
+    <div class="settings-control">
+      <label for="dock-count">Dock app count</label>
+      <select class="settings-select" id="dock-count">
+        <option value="4">4 apps</option>
+        <option value="5" selected>5 apps</option>
+        <option value="6">6 apps</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- APP DRAWER -->
+  <div class="settings-page" id="page-drawer">
+    <button class="settings-back">← Back</button>
+    <h2 class="settings-page-title">App Drawer</h2>
+    <div class="settings-control">
+      <label for="drawer-layout">Drawer layout</label>
+      <select class="settings-select" id="drawer-layout">
+        <option value="grid">Neon Grid</option>
+        <option value="list">Vertical List</option>
+        <option value="categories">Smart Categories</option>
+      </select>
+    </div>
+    <div class="settings-control">
+      <label for="drawer-columns">Grid columns</label>
+      <select class="settings-select" id="drawer-columns">
+        <option value="3">3 columns</option>
+        <option value="4" selected>4 columns</option>
+        <option value="5">5 columns</option>
+      </select>
+    </div>
+    <div class="settings-control">
+      <label for="drawer-icon-size">Drawer icon size</label>
+      <input class="settings-range" id="drawer-icon-size" type="range" min="35" max="75" value="48">
+    </div>
+  </div>
+
+  <!-- WALLPAPERS -->
+  <div class="settings-page" id="page-wallpapers">
+    <button class="settings-back">← Back</button>
+    <h2 class="settings-page-title">Wallpapers</h2>
+    <div class="settings-control">
+      <label for="wallpaper-upload">Choose a wallpaper</label>
+      <input id="wallpaper-upload" type="file" accept="image/*">
+      <small>Choose an image from your device.</small>
+    </div>
+  </div>
+
+  <!-- SEARCH -->
+  <div class="settings-page" id="page-search">
+    <button class="settings-back">← Back</button>
+    <h2 class="settings-page-title">Search Settings</h2>
+    <div class="settings-control">
+      <label for="search-style">Search bar style</label>
+      <select class="settings-select" id="search-style">
+        <option value="rounded">Rounded</option>
+        <option value="square">Square</option>
+        <option value="neon">Neon Glow</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- ANIMATIONS -->
+  <div class="settings-page" id="page-animations">
+    <button class="settings-back">← Back</button>
+    <h2 class="settings-page-title">Animations</h2>
+    <div class="settings-control">
+      <label for="animation-speed">Animation speed</label>
+      <select class="settings-select" id="animation-speed">
+        <option value="fast">Fast</option>
+        <option value="normal" selected>Normal</option>
+        <option value="slow">Slow</option>
+      </select>
+    </div>
+  </div>
+
+  <!-- PRIVACY -->
+  <div class="settings-page" id="page-privacy">
+    <button class="settings-back">← Back</button>
+    <h2 class="settings-page-title">Privacy & Security</h2>
+    <div class="security-card">
+      <h3>🔐 Launcher Screen Lock</h3>
+      <p>Set a separate PIN for Alex Launcher.</p>
+      <input class="security-input" id="launcher-pin" type="password" inputmode="numeric" maxlength="6" placeholder="Create 4–6 digit PIN">
+      <input class="security-input" id="launcher-pin-confirm" type="password" inputmode="numeric" maxlength="6" placeholder="Confirm PIN">
+      <button class="security-button" id="save-launcher-pin">Save PIN</button>
+      <p class="security-status" id="pin-status">No PIN configured.</p>
+    </div>
+    <div class="settings-info-card">
+      Fingerprint unlocking requires native Android biometric integration. It cannot be activated in the website preview.
+    </div>
+  </div>
+
+  <!-- BACKUP -->
+  <div class="settings-page" id="page-backup">
+    <button class="settings-back">← Back</button>
+    <h2 class="settings-page-title">Backup & Restore</h2>
+    <div class="settings-info-card">
+      Backup and restore controls will be connected in a later update.
+    </div>
+  </div>
+
+  <!-- ABOUT -->
+  <div class="settings-page" id="page-about">
+    <button class="settings-back">← Back</button>
+    <h2 class="settings-page-title">About Alex Launcher</h2>
+    <div class="settings-info-card">
+      <h3>Alex Launcher</h3>
+      <p>Version 1.0.0</p>
+      <p>Your phone. Your style. Your experience.</p>
+    </div>
+  </div>
+
+  <footer class="settings-footer">
+    Alex Launcher • Personalise your experience
+  </footer>
+
+</section>
+
+<script src="./settings.js"></script>
+</body>
+        </html>
+                                                                        
