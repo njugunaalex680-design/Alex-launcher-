@@ -1,5 +1,5 @@
 
-// ALEX LAUNCHER - MAIN JAVASCRIPT
+// ALEX LAUNCHER
 
 // CLOCK AND DATE
 function updateClock() {
@@ -7,13 +7,15 @@ function updateClock() {
 
   const clock = document.getElementById("clock");
   const date = document.getElementById("date");
+  const statusTime = document.getElementById("status-time");
 
-  if (clock) {
-    clock.textContent = now.toLocaleTimeString([], {
-      hour: "2-digit",
-      minute: "2-digit"
-    });
-  }
+  const time = now.toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+
+  if (clock) clock.textContent = time;
+  if (statusTime) statusTime.textContent = time;
 
   if (date) {
     date.textContent = now.toLocaleDateString([], {
@@ -28,16 +30,13 @@ updateClock();
 setInterval(updateClock, 1000);
 
 
-// APP DRAWER ELEMENTS
+// APP DRAWER
 const drawer = document.getElementById("app-drawer");
 const drawerGrid = document.getElementById("drawer-grid");
 const drawerSearch = document.getElementById("drawer-search");
 const drawerClose = document.getElementById("drawer-close");
 const drawerHeading = document.getElementById("drawer-heading");
 
-
-// SAMPLE APP LIST
-// These are preview entries, not automatically detected phone apps.
 const apps = [
   { name: "Calculator", icon: "🧮", category: "Tools" },
   { name: "Calendar", icon: "📅", category: "Productivity" },
@@ -63,8 +62,6 @@ const apps = [
 
 let activeCategory = "All";
 
-
-// DISPLAY APPS
 function displayApps() {
   if (!drawerGrid) return;
 
@@ -72,43 +69,39 @@ function displayApps() {
     ? drawerSearch.value.toLowerCase().trim()
     : "";
 
-  const filteredApps = apps
-    .filter(app => {
-      const matchesCategory =
-        activeCategory === "All" ||
-        app.category === activeCategory;
-
-      const matchesSearch =
-        app.name.toLowerCase().includes(searchText);
-
-      return matchesCategory && matchesSearch;
-    })
+  const filtered = apps
+    .filter(app =>
+      (activeCategory === "All" || app.category === activeCategory) &&
+      app.name.toLowerCase().includes(searchText)
+    )
     .sort((a, b) => a.name.localeCompare(b.name));
 
   drawerGrid.innerHTML = "";
 
   if (drawerHeading) {
     drawerHeading.textContent =
-      activeCategory === "All"
-        ? "All Applications"
-        : activeCategory + " Apps";
+      activeCategory === "All" ? "All Applications" : activeCategory + " Apps";
   }
 
-  if (filteredApps.length === 0) {
+  if (filtered.length === 0) {
     drawerGrid.innerHTML =
       '<p class="drawer-empty">No apps found</p>';
     return;
   }
 
-  filteredApps.forEach(app => {
+  filtered.forEach(app => {
     const button = document.createElement("button");
     button.className = "drawer-app";
 
-    button.innerHTML = `
-      <span class="app-icon">${app.icon}</span>
-      <span class="app-name">${app.name}</span>
-    `;
+    const icon = document.createElement("span");
+    icon.className = "app-icon";
+    icon.textContent = app.icon;
 
+    const name = document.createElement("span");
+    name.className = "app-name";
+    name.textContent = app.name;
+
+    button.append(icon, name);
     drawerGrid.appendChild(button);
   });
 }
@@ -116,23 +109,23 @@ function displayApps() {
 
 // OPEN DRAWER
 function openDrawer() {
-  if (!drawer) return;
+  if (!drawer) {
+    console.error("App drawer element not found!");
+    return;
+  }
 
   drawer.classList.add("active");
   displayApps();
 
   if (drawerSearch) {
     drawerSearch.value = "";
-    drawerSearch.focus();
   }
 }
 
 
 // CLOSE DRAWER
 function closeDrawer() {
-  if (drawer) {
-    drawer.classList.remove("active");
-  }
+  if (drawer) drawer.classList.remove("active");
 }
 
 if (drawerClose) {
@@ -140,20 +133,24 @@ if (drawerClose) {
 }
 
 
-// OPEN FROM APPS WHEEL
-document.querySelectorAll(".wheel-item").forEach(item => {
-  item.addEventListener("click", () => {
-    if (item.textContent.trim().includes("Apps")) {
-      openDrawer();
-    }
-  });
+// APPS WHEEL - DIRECT CONNECTION
+const wheelItems = document.querySelectorAll(".wheel-item");
+
+wheelItems.forEach(item => {
+  const label = item.querySelector("p");
+
+  if (label && label.textContent.trim() === "Apps") {
+    item.style.cursor = "pointer";
+    item.addEventListener("click", openDrawer);
+  }
 });
 
 
-// OPEN FROM BOTTOM DOCK
+// BOTTOM DOCK
 const openAppsButton = document.getElementById("open-apps");
 
 if (openAppsButton) {
+  openAppsButton.style.cursor = "pointer";
   openAppsButton.addEventListener("click", openDrawer);
 }
 
@@ -164,24 +161,25 @@ if (drawerSearch) {
 }
 
 
-// CATEGORY FILTER
-document.querySelectorAll(".drawer-categories button").forEach(button => {
-  button.addEventListener("click", () => {
-    document.querySelectorAll(".drawer-categories button")
-      .forEach(item => item.classList.remove("selected"));
+// CATEGORIES
+document.querySelectorAll(".drawer-categories button")
+  .forEach(button => {
+    button.addEventListener("click", () => {
+      activeCategory = button.dataset.category;
 
-    button.classList.add("selected");
-    activeCategory = button.dataset.category;
+      document.querySelectorAll(".drawer-categories button")
+        .forEach(item => item.classList.remove("selected"));
 
-    displayApps();
+      button.classList.add("selected");
+      displayApps();
+    });
   });
-});
 
 
-// ALPHABETICAL NAVIGATION
-document.querySelectorAll(".drawer-alphabet button").forEach(button => {
-  button.addEventListener("click", () => {
-    if (activeCategory !== "All") {
+// ALPHABET NAVIGATION
+document.querySelectorAll(".drawer-alphabet button")
+  .forEach(button => {
+    button.addEventListener("click", () => {
       activeCategory = "All";
 
       document.querySelectorAll(".drawer-categories button")
@@ -191,37 +189,33 @@ document.querySelectorAll(".drawer-alphabet button").forEach(button => {
             item.dataset.category === "All"
           );
         });
-    }
 
-    if (drawerSearch) {
-      drawerSearch.value = "";
-    }
+      if (drawerSearch) drawerSearch.value = "";
 
-    displayApps();
+      displayApps();
 
-    const letter = button.dataset.letter;
-    const matchingApp = [...drawerGrid.querySelectorAll(".drawer-app")]
-      .find(app => app.querySelector(".app-name")
-        .textContent.toUpperCase().startsWith(letter));
+      const letter = button.dataset.letter;
 
-    if (matchingApp) {
-      matchingApp.scrollIntoView({
-        behavior: "smooth",
-        block: "center"
-      });
-    }
+      const matchingApp = [...drawerGrid.querySelectorAll(".drawer-app")]
+        .find(item =>
+          item.querySelector(".app-name")
+            .textContent.toUpperCase().startsWith(letter)
+        );
+
+      if (matchingApp) {
+        matchingApp.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
+      }
+    });
   });
-});
 
 
 // ESCAPE KEY
 document.addEventListener("keydown", event => {
-  if (event.key === "Escape") {
-    closeDrawer();
-  }
+  if (event.key === "Escape") closeDrawer();
 });
 
-
-// INITIAL DRAWER CONTENT
 displayApps();
-    
+   
