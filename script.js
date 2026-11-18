@@ -1,221 +1,220 @@
 
-// ALEX LAUNCHER
+document.addEventListener("DOMContentLoaded", () => {
+  const settingsHome = document.getElementById("settings-home");
+  const pages = document.querySelectorAll(".settings-page");
 
-// CLOCK AND DATE
-function updateClock() {
-  const now = new Date();
-
-  const clock = document.getElementById("clock");
-  const date = document.getElementById("date");
-  const statusTime = document.getElementById("status-time");
-
-  const time = now.toLocaleTimeString([], {
-    hour: "2-digit",
-    minute: "2-digit"
-  });
-
-  if (clock) clock.textContent = time;
-  if (statusTime) statusTime.textContent = time;
-
-  if (date) {
-    date.textContent = now.toLocaleDateString([], {
-      weekday: "long",
-      day: "numeric",
-      month: "long"
-    });
-  }
-}
-
-updateClock();
-setInterval(updateClock, 1000);
-
-
-// APP DRAWER
-const drawer = document.getElementById("app-drawer");
-const drawerGrid = document.getElementById("drawer-grid");
-const drawerSearch = document.getElementById("drawer-search");
-const drawerClose = document.getElementById("drawer-close");
-const drawerHeading = document.getElementById("drawer-heading");
-
-const apps = [
-  { name: "Calculator", icon: "🧮", category: "Tools" },
-  { name: "Calendar", icon: "📅", category: "Productivity" },
-  { name: "Camera", icon: "📷", category: "Media" },
-  { name: "Chrome", icon: "🌐", category: "Tools" },
-  { name: "Clock", icon: "⏰", category: "Tools" },
-  { name: "Contacts", icon: "👥", category: "Social" },
-  { name: "Drive", icon: "📁", category: "Productivity" },
-  { name: "Files", icon: "📂", category: "Tools" },
-  { name: "Gallery", icon: "🖼️", category: "Media" },
-  { name: "Gmail", icon: "✉️", category: "Productivity" },
-  { name: "Google", icon: "🔍", category: "Tools" },
-  { name: "Maps", icon: "🗺️", category: "Tools" },
-  { name: "Messages", icon: "💬", category: "Social" },
-  { name: "Music", icon: "🎵", category: "Media" },
-  { name: "Phone", icon: "📞", category: "Social" },
-  { name: "Photos", icon: "🌄", category: "Media" },
-  { name: "Play Store", icon: "▶️", category: "Tools" },
-  { name: "Settings", icon: "⚙️", category: "Tools" },
-  { name: "YouTube", icon: "▶️", category: "Media" },
-  { name: "WhatsApp", icon: "💚", category: "Social" }
-];
-
-let activeCategory = "All";
-
-function displayApps() {
-  if (!drawerGrid) return;
-
-  const searchText = drawerSearch
-    ? drawerSearch.value.toLowerCase().trim()
-    : "";
-
-  const filtered = apps
-    .filter(app =>
-      (activeCategory === "All" || app.category === activeCategory) &&
-      app.name.toLowerCase().includes(searchText)
-    )
-    .sort((a, b) => a.name.localeCompare(b.name));
-
-  drawerGrid.innerHTML = "";
-
-  if (drawerHeading) {
-    drawerHeading.textContent =
-      activeCategory === "All" ? "All Applications" : activeCategory + " Apps";
-  }
-
-  if (filtered.length === 0) {
-    drawerGrid.innerHTML =
-      '<p class="drawer-empty">No apps found</p>';
-    return;
-  }
-
-  filtered.forEach(app => {
-    const button = document.createElement("button");
-    button.className = "drawer-app";
-
-    const icon = document.createElement("span");
-    icon.className = "app-icon";
-    icon.textContent = app.icon;
-
-    const name = document.createElement("span");
-    name.className = "app-name";
-    name.textContent = app.name;
-
-    button.append(icon, name);
-    drawerGrid.appendChild(button);
-  });
-}
-
-
-// OPEN DRAWER
-function openDrawer() {
-  if (!drawer) {
-    console.error("App drawer element not found!");
-    return;
-  }
-
-  drawer.classList.add("active");
-  displayApps();
-
-  if (drawerSearch) {
-    drawerSearch.value = "";
-  }
-}
-
-
-// CLOSE DRAWER
-function closeDrawer() {
-  if (drawer) drawer.classList.remove("active");
-}
-
-if (drawerClose) {
-  drawerClose.addEventListener("click", closeDrawer);
-}
-
-
-// APPS WHEEL - DIRECT CONNECTION
-const wheelItems = document.querySelectorAll(".wheel-item");
-
-wheelItems.forEach(item => {
-  const label = item.querySelector("p");
-
-  if (label && label.textContent.trim() === "Apps") {
-    item.style.cursor = "pointer";
-    item.addEventListener("click", openDrawer);
-  }
-});
-
-
-// BOTTOM DOCK
-const openAppsButton = document.getElementById("open-apps");
-
-if (openAppsButton) {
-  openAppsButton.style.cursor = "pointer";
-  openAppsButton.addEventListener("click", openDrawer);
-}
-
-
-// SEARCH
-if (drawerSearch) {
-  drawerSearch.addEventListener("input", displayApps);
-}
-
-
-// CATEGORIES
-document.querySelectorAll(".drawer-categories button")
-  .forEach(button => {
+  // SETTINGS PAGE NAVIGATION
+  document.querySelectorAll("[data-page]").forEach(button => {
     button.addEventListener("click", () => {
-      activeCategory = button.dataset.category;
+      settingsHome.style.display = "none";
 
-      document.querySelectorAll(".drawer-categories button")
-        .forEach(item => item.classList.remove("selected"));
+      pages.forEach(page => page.classList.remove("active"));
+
+      const selectedPage = document.getElementById(
+        "page-" + button.dataset.page
+      );
+
+      if (selectedPage) selectedPage.classList.add("active");
+    });
+  });
+
+  document.querySelectorAll(".settings-back").forEach(button => {
+    button.addEventListener("click", () => {
+      pages.forEach(page => page.classList.remove("active"));
+      settingsHome.style.display = "block";
+    });
+  });
+
+  // CLOSE SETTINGS
+  document.getElementById("settings-close")?.addEventListener("click", () => {
+    window.location.href = "./index.html";
+  });
+
+  // FONT SELECTION
+  const fonts = [
+    "Roboto", "Poppins", "Montserrat", "Open Sans", "Lato",
+    "Nunito", "Ubuntu", "Raleway", "Playfair Display",
+    "Merriweather", "Oswald", "Bebas Neue", "Quicksand",
+    "Dancing Script", "Pacifico", "Orbitron", "Space Grotesk",
+    "Comfortaa", "Josefin Sans", "Cinzel"
+  ];
+
+  const fontGrid = document.getElementById("font-grid");
+
+  fonts.forEach(font => {
+    const button = document.createElement("button");
+    button.className = "font-option";
+    button.textContent = font;
+    button.style.fontFamily = `"${font}", sans-serif`;
+
+    button.addEventListener("click", () => {
+      document.body.style.fontFamily = `"${font}", sans-serif`;
+      localStorage.setItem("alex-font", font);
+
+      document.querySelectorAll(".font-option").forEach(item => {
+        item.classList.remove("selected");
+      });
 
       button.classList.add("selected");
-      displayApps();
     });
+
+    fontGrid.appendChild(button);
   });
 
+  const savedFont = localStorage.getItem("alex-font");
 
-// ALPHABET NAVIGATION
-document.querySelectorAll(".drawer-alphabet button")
-  .forEach(button => {
-    button.addEventListener("click", () => {
-      activeCategory = "All";
+  if (savedFont) {
+    document.body.style.fontFamily = `"${savedFont}", sans-serif`;
 
-      document.querySelectorAll(".drawer-categories button")
-        .forEach(item => {
-          item.classList.toggle(
-            "selected",
-            item.dataset.category === "All"
-          );
-        });
-
-      if (drawerSearch) drawerSearch.value = "";
-
-      displayApps();
-
-      const letter = button.dataset.letter;
-
-      const matchingApp = [...drawerGrid.querySelectorAll(".drawer-app")]
-        .find(item =>
-          item.querySelector(".app-name")
-            .textContent.toUpperCase().startsWith(letter)
-        );
-
-      if (matchingApp) {
-        matchingApp.scrollIntoView({
-          behavior: "smooth",
-          block: "center"
-        });
+    document.querySelectorAll(".font-option").forEach(button => {
+      if (button.textContent === savedFont) {
+        button.classList.add("selected");
       }
     });
+  }
+
+  // FONT SIZE
+  const fontSize = document.getElementById("font-size");
+  const fontSizeValue = document.getElementById("font-size-value");
+
+  function applyFontSize(value) {
+    document.documentElement.style.setProperty("--launcher-font-size", value + "px");
+    fontSizeValue.textContent = value + "px";
+    localStorage.setItem("alex-font-size", value);
+  }
+
+  fontSize.addEventListener("input", () => {
+    applyFontSize(fontSize.value);
   });
 
+  const savedFontSize = localStorage.getItem("alex-font-size");
+  if (savedFontSize) {
+    fontSize.value = savedFontSize;
+    applyFontSize(savedFontSize);
+  }
 
-// ESCAPE KEY
-document.addEventListener("keydown", event => {
-  if (event.key === "Escape") closeDrawer();
+  // THEME SELECTION
+  document.querySelectorAll(".theme-option").forEach(button => {
+    button.addEventListener("click", () => {
+      const theme = button.dataset.theme;
+
+      document.documentElement.dataset.theme = theme;
+      localStorage.setItem("alex-theme", theme);
+
+      document.querySelectorAll(".theme-option").forEach(item => {
+        item.classList.remove("selected");
+      });
+
+      button.classList.add("selected");
+    });
+  });
+
+  const savedTheme = localStorage.getItem("alex-theme");
+
+  if (savedTheme) {
+    document.documentElement.dataset.theme = savedTheme;
+
+    document.querySelectorAll(".theme-option").forEach(button => {
+      if (button.dataset.theme === savedTheme) {
+        button.classList.add("selected");
+      }
+    });
+  }
+
+  // SAVE SELECT AND RANGE SETTINGS
+  const settingIds = [
+    "home-icon-size",
+    "wheel-size",
+    "dock-count",
+    "drawer-layout",
+    "drawer-columns",
+    "drawer-icon-size",
+    "search-style",
+    "animation-speed"
+  ];
+
+  settingIds.forEach(id => {
+    const control = document.getElementById(id);
+    if (!control) return;
+
+    const key = "alex-setting-" + id;
+    const savedValue = localStorage.getItem(key);
+
+    if (savedValue !== null) control.value = savedValue;
+
+    control.addEventListener("input", () => {
+      localStorage.setItem(key, control.value);
+    });
+
+    control.addEventListener("change", () => {
+      localStorage.setItem(key, control.value);
+    });
+  });
+
+  // WALLPAPER PREVIEW AND SAVE
+  const wallpaperInput = document.getElementById("wallpaper-upload");
+
+  wallpaperInput?.addEventListener("change", () => {
+    const file = wallpaperInput.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith("image/")) {
+      alert("Please choose an image.");
+      return;
+    }
+
+    if (file.size > 3 * 1024 * 1024) {
+      alert("Choose an image smaller than 3 MB.");
+      return;
+    }
+
+    const reader = new FileReader();
+
+    reader.onload = event => {
+      localStorage.setItem("alex-wallpaper", event.target.result);
+      document.body.style.backgroundImage =
+        `url("${event.target.result}")`;
+      document.body.style.backgroundSize = "cover";
+      document.body.style.backgroundPosition = "center";
+    };
+
+    reader.readAsDataURL(file);
+  });
+
+  const savedWallpaper = localStorage.getItem("alex-wallpaper");
+
+  if (savedWallpaper) {
+    document.body.style.backgroundImage = `url("${savedWallpaper}")`;
+    document.body.style.backgroundSize = "cover";
+    document.body.style.backgroundPosition = "center";
+  }
+
+  // BASIC PIN SETUP DEMO
+  // This is not a secure screen lock. Native Android security
+  // will be needed before using a PIN to protect the launcher.
+  const savePinButton = document.getElementById("save-launcher-pin");
+
+  savePinButton?.addEventListener("click", async () => {
+    const pin = document.getElementById("launcher-pin").value;
+    const confirmPin = document.getElementById("launcher-pin-confirm").value;
+    const status = document.getElementById("pin-status");
+
+    if (!/^\d{4,6}$/.test(pin)) {
+      status.textContent = "Enter a PIN with 4 to 6 digits.";
+      return;
+    }
+
+    if (pin !== confirmPin) {
+      status.textContent = "The PINs do not match.";
+      return;
+    }
+
+    status.textContent =
+      "PIN setup preview only. Secure Android lock is not connected yet.";
+
+    document.getElementById("launcher-pin").value = "";
+    document.getElementById("launcher-pin-confirm").value = "";
+  });
+
 });
-
-displayApps();
-   
+    
